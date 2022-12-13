@@ -1,22 +1,25 @@
-require('dotenv').config()
+require('dotenv').config();
 
 const express = require('express');
+const workoutRoutes = require('./routes/workouts');
 
 //initialize express app
 const app = express();
 
-// middleware
+// middlewares
+
+//to access incoming data in req body
+app.use(express.json())
+
 app.use((req, res, next) => {
-  console.log(req.path, req.method)
-  next()
-})
+  console.log(req.path, req.method);
+  next();
+});
 
 //routes
-app.get("/",(req, res)=>{
-  res.json({msg:"welcome to backend"})
-})
+app.use('/api/workouts', workoutRoutes);
 
 //listen for requests
 app.listen(process.env.PORT, () => {
-  console.log('listening on port', process.env.PORT );
+  console.log('listening on port', process.env.PORT);
 });
